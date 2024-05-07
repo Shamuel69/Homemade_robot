@@ -1,10 +1,9 @@
 import json
-
+from msgspec import Message
 
 sentences = []
 ignore_characters = ["?", "!", ".", ","]
 
-#test
 class Lemmitizer():
     #words > numbers > most common numbers
     def __init__(self, input:str):
@@ -553,12 +552,14 @@ Retaliation
 Revenge
 Grudge
 Antagonism"""
-with open("Datasets/posneg.json", "r+") as f:
-    user = json.load(f)
+msg = Message({
+    "positive": list[str],
+    "negative": list[str]  
+})
 
-user["negative"] = (listed.split("\n"))
+with open("Datapage/posneg.json", "r") as file:
+    json_data = json.load(file)
 
-with open("Datasets\posneg.json", "w+") as f:
-    json.dump(user, f, indent=4)
+data = msg.from_dict(json_data)
 
-print(listed.split("\n"))
+print(data)
