@@ -1,5 +1,5 @@
 import json
-from msgspec import Message
+import msgspec
 
 sentences = []
 ignore_characters = ["?", "!", ".", ","]
@@ -552,14 +552,14 @@ Retaliation
 Revenge
 Grudge
 Antagonism"""
-msg = Message({
+msg = ({
     "positive": list[str],
     "negative": list[str]  
 })
 
-with open("Datapage/posneg.json", "r") as file:
+with open("Datasets/posneg.json", "r") as file:
     json_data = json.load(file)
 
-data = msg.from_dict(json_data)
+data = msgspec.json.schema(json_data)
 
 print(data)
